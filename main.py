@@ -15,5 +15,7 @@ if continueProgram.lower() == "y":
     invoces_data = readFiles(xml_files)
     createCSVFile(invoces_data)
     # print(invoces_data)
+
+    input(f"Proceso finalizado")
 else:
     print("Programa terminado")
