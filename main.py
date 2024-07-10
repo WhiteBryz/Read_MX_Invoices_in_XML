@@ -1,5 +1,3 @@
-# import listAllFiles as LAF
-# from createCSV import createCSVFile
 from readXMLFiles import readFiles
 from modules import info_Json, get_xml_files, create_CSV_File
 
@@ -15,9 +13,10 @@ print("=========================================================\n")
 
 # Traer lista de los archivos a leer
 xml_files = get_xml_files()
+totalReadFiles = len(xml_files)
 
-if len(xml_files) > 0:
-    print(f"Numero de XML a extraer: {len(xml_files)}")
+if totalReadFiles > 0:
+    print(f"Numero de XML a extraer: {totalReadFiles}")
     continueProgram = input("¿Desea continuar? (y/n):")
     print("\n")
 

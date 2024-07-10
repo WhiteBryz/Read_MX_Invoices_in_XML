@@ -73,7 +73,9 @@ def concat(serie,folio):
         return f"{serie} {folio}"
     else:
         return f"{folio}"
-    
+
+
+# Función para validar que el elemento en cuestión exista (Se utiliza en la extracción de impuestos y descuentos)
 def ifAmountExits(element):
     if element != None:
         return float(element)
