@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime as dt
+import dictionarys as dic
 
 def readFiles(xml_files):
     invoces_data = []
@@ -15,15 +16,25 @@ def readFiles(xml_files):
             File = f"{file[:10]}...xml"
             Rfc = root[0].get("Rfc")
             Nombre = root[0].get("Nombre")
+            CodigoRegimen = root[0].get("RegimenFiscal")
+            NombreRegimen = dic.regimenes_fiscales[CodigoRegimen]["Nombre"]
             Serie = root.get("Serie")
             Folio = root.get("Folio")
             serieFolio = concat(Serie,Folio)
+
+            # Formateo de fecha
             Fecha = dt.strptime(root.get("Fecha"),"%Y-%m-%dT%H:%M:%S")
             Fecha = Fecha.strftime("%d/%m/%Y")
 
-            # Importe e impuestos
-            Base = root[3][0][0].get("Base")
-            Importe = root[3][0][0].get("Importe")
+            # Impuestos         
+            TotalImpuestosRetenidos = ifAmountExits(root[3].get("TotalImpuestosRetenidos"))
+            TotalImpuestosTrasladados = ifAmountExits(root[3].get("TotalImpuestosTrasladados"))
+
+            # Total y subtotal
+            SubTotal = ifAmountExits(root.get("SubTotal"))
+            Descuento = ifAmountExits(root.get("Descuento"))
+            SubTotal = SubTotal - Descuento
+            Total = ifAmountExits(root.get("Total"))
 
             # Complemento
             Uuid = root[4][0].get("UUID")
@@ -32,22 +43,28 @@ def readFiles(xml_files):
                 "File": File,
                 "Rfc": Rfc,
                 "Nombre": Nombre,
+                "CodigoRegimen": CodigoRegimen,
+                "NombreRegimen": NombreRegimen,
                 "Serie": Serie,
                 "Folio": Folio,
                 "SerieFolio": serieFolio,
                 "Fecha": Fecha,
-                "Base": Base,
-                "Importe": Importe,
+                "TotalImpuestosRetenidos": TotalImpuestosRetenidos,
+                "TotalImpuestosTrasladados": TotalImpuestosTrasladados,
+                "SubTotal": SubTotal,
+                "Descuento": Descuento,
+                "Total": Total,
                 "Uuid": Uuid
             }
+
             invoces_data.append(invoce)
             counter = counter + 1
-            # print(f"{File}...xml, {Rfc}, {Nombre}, {Serie}, {Folio}, {serieFolio}, {Fecha}, {Base}, {Importe}, {Uuid}")
-            # print(len(root[0]))
         except:
-            print(f"No se pudo leer el archivo: {file}")
+            print(f"    No se pudo leer el archivo: {file}")
     
-    print(f"En total se leyeron {counter} de {len(xml_files)} archivos XML.")
+    # Mensaje final
+    print(f"\nEn total se leyeron {counter} de {len(xml_files)} archivos XML.")
+    
     return invoces_data
 
 ## Función para concatenar los strings de la serie y el folio
@@ -56,3 +73,9 @@ def concat(serie,folio):
         return f"{serie} {folio}"
     else:
         return f"{folio}"
+    
+def ifAmountExits(element):
+    if element != None:
+        return float(element)
+    else:
+        return 0

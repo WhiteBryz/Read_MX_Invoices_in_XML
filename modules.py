@@ -33,13 +33,20 @@ def get_xml_files(directory="./"):
         return []
     
 # Función que crea el archivo CSV con base a un diccionario de facturas XML ya extraídas.
-def create_CSV_File(invoces_data):
+def create_CSV_File(invoices_data):
     with open("datos_facturas.csv",mode="w", newline="") as file:
-        fieldnames = ["File", "Rfc", "Nombre", "Serie", "Folio", "SerieFolio", "Fecha", "Base", "Importe", "Uuid"]
-        writer = csv.DictWriter(file,fieldnames=fieldnames)
-
-        writer.writeheader()
+        # Header
         try:
-            writer.writerows(invoces_data)
-        except Exception as e:
-            print(f"Hubo un error al crear el CSV: ",e)
+            # Extraemos encabezado con base en los Keys del primer elemento de las facturas.
+            fieldnames = list(invoices_data[0])
+            # Colocamos encabezado
+            writer = csv.DictWriter(file,fieldnames=fieldnames)
+            writer.writeheader()
+        except:
+            print("Hubo un error al escribir el encabezado: ")
+        
+        # Rows
+        try:
+            writer.writerows(invoices_data)
+        except:
+            print(f"Hubo un error al insertar las filas: ")
