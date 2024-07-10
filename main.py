@@ -1,7 +1,17 @@
 import listAllFiles as LAF
 from createCSV import createCSVFile
 from readXMLFiles import readFiles
+from modules import infoJson
 
+
+app_info = infoJson()
+
+print("=========================================================")
+print(f"{app_info['name']} {app_info['version']}")
+print(f"Creador: {app_info['creator']}")
+print(f"Versión de facturación: {app_info['invoiceVersion']}")
+print(f"Repositorio: {app_info['github']}")
+print("=========================================================")
 
 xml_files = LAF.get_xml_files()
 number_XML_files = len(xml_files)
@@ -19,3 +29,4 @@ if continueProgram.lower() == "y":
     input(f"Proceso finalizado")
 else:
     print("Programa terminado")
+
