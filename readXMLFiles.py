@@ -17,7 +17,7 @@ def readFiles(xml_files):
             Nombre = root[0].get("Nombre")
             Serie = root.get("Serie")
             Folio = root.get("Folio")
-            serieFolio = concatFolio(Serie,Folio)
+            serieFolio = concat(Serie,Folio)
             Fecha = dt.strptime(root.get("Fecha"),"%Y-%m-%dT%H:%M:%S")
             Fecha = Fecha.strftime("%d/%m/%Y")
 
@@ -50,7 +50,8 @@ def readFiles(xml_files):
     print(f"En total se leyeron {counter} de {len(xml_files)} archivos XML.")
     return invoces_data
 
-def concatFolio(serie,folio):
+## Función para concatenar los strings de la serie y el folio
+def concat(serie,folio):
     if(serie != None):
         return f"{serie} {folio}"
     else:

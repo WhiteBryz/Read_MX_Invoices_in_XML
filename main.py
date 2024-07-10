@@ -1,10 +1,10 @@
-import listAllFiles as LAF
-from createCSV import createCSVFile
+# import listAllFiles as LAF
+# from createCSV import createCSVFile
 from readXMLFiles import readFiles
-from modules import infoJson
+from modules import info_Json, get_xml_files, create_CSV_File
 
-
-app_info = infoJson()
+# Extraer datos del JSON
+app_info = info_Json()
 
 print("=========================================================")
 print(f"{app_info['name']} {app_info['version']}")
@@ -13,20 +13,20 @@ print(f"Versión de facturación: {app_info['invoiceVersion']}")
 print(f"Repositorio: {app_info['github']}")
 print("=========================================================")
 
-xml_files = LAF.get_xml_files()
-number_XML_files = len(xml_files)
+# Traer lista de los archivos a leer
+xml_files = get_xml_files()
 
-print(f"Numero de XML a extraer: {number_XML_files}")
-# print(xml_files)
+print(f"Numero de XML a extraer: {len(xml_files)}")
 continueProgram = input("¿Desea continuar? (y/n): ")
 
 if continueProgram.lower() == "y":
-
+    # Leemos las facturas en formato XML
     invoces_data = readFiles(xml_files)
-    createCSVFile(invoces_data)
-    # print(invoces_data)
+
+    # Creamos archivo CSV
+    create_CSV_File(invoces_data)
 
     input(f"Proceso finalizado")
 else:
-    print("Programa terminado")
+    print("Proceso cancelado, se finaliza programa.")
 
