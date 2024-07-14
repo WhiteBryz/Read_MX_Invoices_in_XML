@@ -1,4 +1,4 @@
-# Read_MX_Invoces_in_XML
+# XMLScrapping
 
 Aplicación creada en Python v.12 para leer facturas expedidas en México en formato XML y extraer datos de mi propio interés.
 
@@ -51,7 +51,7 @@ El documento CSV tiene la siguiente estructura basado en los encabezados:
 ## Librerías usadas
 Para poder funcionar, se hacen uso de las siguientes librerías de python (el orden no importa):
 - __JSON__ → Para leer los archivos de tipo JSON.
-- __os__ → Para leer los archivos dentro de una carpeta
+- __os__ → Para leer los archivos dentro de una carpeta.
 - __sys__ → Para asegurarnos si el el programa está siendo ejecutado como un ejecutable empaquetado. Se usa para poder definir la ruta de nuestro archivo JSON y poder leer los datos de información.
 - __csv__ → Se emplea para crear el documento CSV.
 - __xml.etree.ElementTree__ → Se utiliza para leer los XML y poder acceder a sus datos.
