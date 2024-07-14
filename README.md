@@ -10,7 +10,7 @@ Los datos a extraer del XML son:
  - Código de Régimen Fiscal
  - Serie
  - Folio
- - Fecha (dd/mm/aaaa)
+ - Fecha de timbrado (dd/mm/aaaa)
  - Total de Impuestos Retenidos (Si hubiera)
  - Total de Impuestos Trasladados (Si hubiera)
  - SubTotal
@@ -37,9 +37,9 @@ El documento CSV tiene la siguiente estructura basado en los encabezados:
  - Nombre
  - Código de Régimen Fiscal
  - Nombre del Régimen Fiscal
- - Serie
- - Folio
- - SerieFolio (Concatenación de los datos Serie y Folio)
+ - Serie (Si hubiera)
+ - Folio (Si hubiera)
+ - SerieFolio (Concatenación de los datos Serie y Folio. Si la factura no tiene ni Serie ni Folio se coloca la primera sección del UUID)
  - Fecha (dd/mm/aaaa)
  - Total de Impuestos Retenidos (Si hubiera)
  - Total de Impuestos Trasladados (Si hubiera)
@@ -47,3 +47,12 @@ El documento CSV tiene la siguiente estructura basado en los encabezados:
  - Descuento (Si hubiera)
  - Total
  - UUID
+
+## Librerías usadas
+Para poder funcionar, se hacen uso de las siguientes librerías de python (el orden no importa):
+- __JSON__ → Para leer
+- __os__ → Para leer los archivos dentro de una carpeta
+- __sys__ → Para asegurarnos si el el programa está siendo ejecutado como un ejecutable empaquetado. Se usa para poder definir la ruta de nuestro archivo JSON y poder leer los datos de información.
+- __csv__ → Se emplea para crear el documento CSV.
+- __xml.etree.ElementTree__ → Se utiliza para leer los XML y poder acceder a sus datos.
+- __datetime__ → Empleado para darle formato a las fechas.

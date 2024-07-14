@@ -21,7 +21,7 @@ def readFiles(xml_files):
             else:
                 Uuid = 0
 
-            # Se obtiene la fecha y se formatea
+            # Se obtiene la fecha de timbrado y se formatea
             Fecha = dt.strptime(timbre_fiscal.get("FechaTimbrado"),"%Y-%m-%dT%H:%M:%S")
             Fecha = Fecha.strftime("%d/%m/%Y")
 
