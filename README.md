@@ -30,7 +30,7 @@ Los datos a extraer del XML son:
   7. Al final se mostrará un mensaje de éxito y para salir de la aplicación basta con darle **Enter** con el teclado o cerrar la pestaña. Ningún funcionamiento adicional se ejecutará.
   8. El usuario deberá abrir el archivo **datos_factura.csv** con la herramienta de su preferencia para darle el formato que requiera o recoja los datos de su interés. Algunos ejemplos de las herramientas que se pueden utilizar son: Excel, Google Sheets o alguna Base de Datos que acepte el formato.
 
-## Formato del CSV
+## Formato del CSV 
 El documento CSV tiene la siguiente estructura basado en los encabezados:
  - File
  - RFC
@@ -48,7 +48,7 @@ El documento CSV tiene la siguiente estructura basado en los encabezados:
  - Total
  - UUID
 
-## Librerías usadas
+## Librerías usadas 📖
 Para poder funcionar, se hacen uso de las siguientes librerías de python (el orden no importa):
 - __JSON__ → Para leer los archivos de tipo JSON.
 - __os__ → Para leer los archivos dentro de una carpeta.
@@ -56,3 +56,7 @@ Para poder funcionar, se hacen uso de las siguientes librerías de python (el or
 - __csv__ → Se emplea para crear el documento CSV.
 - __xml.etree.ElementTree__ → Se utiliza para leer los XML y poder acceder a sus datos.
 - __datetime__ → Empleado para darle formato a las fechas.
+
+## Archivo .bat ⚠️
+El archivo build contiene comandos para Windows que automatiza el proceso de crear el ejecutable en caso de realizar cambios en el código.
+Para que funcione adecuadamente es necesario tener instalado Python y Pyinstaller. Este último es una herramienta que empaqueta el código python y crea el ejecutable (_.exe_). Además, es necesario añadir la ruta de la carpeta de scripts de python a nuestras variables de entorno, de lo contrario no se podrá ejecutar. *Esto en caso de querer crear nuestro propio ejecutable.* Dentro de la carpeta *dist* se encuentra el ejecutable con la última versión disponible.
