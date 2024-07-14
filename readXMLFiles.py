@@ -12,32 +12,42 @@ def readFiles(xml_files):
             tree = ET.parse(file)
             root = tree.getroot()
 
+            # Se obtiene el UUID del complemento (Timbre fiscal)
+            ns = {'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital'}
+            timbre_fiscal = root.find('.//tfd:TimbreFiscalDigital', ns)
+
+            if timbre_fiscal is not None:
+                Uuid = timbre_fiscal.get('UUID')
+            else:
+                Uuid = 0
+
+            # Se obtiene la fecha y se formatea
+            Fecha = dt.strptime(timbre_fiscal.get("FechaTimbrado"),"%Y-%m-%dT%H:%M:%S")
+            Fecha = Fecha.strftime("%d/%m/%Y")
+
             # Datos generales factura
             File = f"{file[:10]}...xml"
             Rfc = root[0].get("Rfc")
             Nombre = root[0].get("Nombre")
             CodigoRegimen = root[0].get("RegimenFiscal")
             NombreRegimen = dic.regimenes_fiscales[CodigoRegimen]["Nombre"]
-            Serie = root.get("Serie")
-            Folio = root.get("Folio")
-            serieFolio = concat(Serie,Folio)
+            Serie = ifElementExists(root.get("Serie"))
+            Folio = ifElementExists(root.get("Folio"))
+            
+            if len(Serie) > 0 or len(Folio) > 0:
+                serieFolio = concat(Serie,Folio)
+            else:
+                serieFolio = Uuid.split("-")[0]         
 
-            # Formateo de fecha
-            Fecha = dt.strptime(root.get("Fecha"),"%Y-%m-%dT%H:%M:%S")
-            Fecha = Fecha.strftime("%d/%m/%Y")
-
-            # Impuestos         
+            # Impuestos       
             TotalImpuestosRetenidos = ifAmountExits(root[3].get("TotalImpuestosRetenidos"))
             TotalImpuestosTrasladados = ifAmountExits(root[3].get("TotalImpuestosTrasladados"))
-
+                
             # Total y subtotal
             SubTotal = ifAmountExits(root.get("SubTotal"))
             Descuento = ifAmountExits(root.get("Descuento"))
             SubTotal = SubTotal - Descuento
             Total = ifAmountExits(root.get("Total"))
-
-            # Complemento
-            Uuid = root[4][0].get("UUID")
 
             invoce = {
                 "File": File,
@@ -81,3 +91,9 @@ def ifAmountExits(element):
         return float(element)
     else:
         return 0
+    
+def ifElementExists(element):
+    if element != None:
+        return element
+    else:
+        return ""
